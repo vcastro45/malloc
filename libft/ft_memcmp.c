@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/23 18:48:29 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/11/23 20:00:11 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*str;
-	int		i;
+	unsigned char	u1;
+	unsigned char	u2;
 
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
+	while (n--)
+	{
+		u1 = *(unsigned char*)s1;
+		u2 = *(unsigned char*)s2;
+		s1++;
+		s2++;
+		if (u1 != u2)
+			return (u1 - u2);
+	}
 	return (0);
 }

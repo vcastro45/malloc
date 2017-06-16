@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/24 09:31:09 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/11/24 09:43:34 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	char	*str;
-	int		i;
+	char	*as1;
+	size_t	i;
+	size_t	j;
 
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	return (0);
+	as1 = s1;
+	i = ft_strlen(s1);
+	j = 0;
+	while ((s2[j] != '\0') && (j < n))
+		as1[i++] = s2[j++];
+	as1[i] = '\0';
+	return (as1);
 }

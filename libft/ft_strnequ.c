@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/26 14:24:57 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/11/27 15:45:40 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+int		ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	char	*str;
-	int		i;
+	size_t	i;
 
 	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
+	if (s2[0] == '\0')
+		return (1);
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i] && i < n)
+		i++;
+	if (i == n && i > 0)
+		i--;
+	if (s1[i] == s2[i])
+		return (1);
 	return (0);
 }

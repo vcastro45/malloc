@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/26 14:27:12 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/12/04 19:33:41 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char	*str;
-	int		i;
+	size_t	i;
+	char	*tronc;
 
 	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	return (0);
+	tronc = malloc(sizeof(char) * (len + 1));
+	if (!tronc)
+		return ((void*)0);
+	while (i < len)
+	{
+		tronc[i] = s[start + i];
+		i++;
+	}
+	while (i < len + 1)
+		tronc[i++] = '\0';
+	return (tronc);
 }

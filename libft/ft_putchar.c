@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/25 15:56:11 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/11/25 15:57:22 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+void	ft_putchar(char c)
 {
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	return (0);
+	write(1, &c, 1);
 }

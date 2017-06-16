@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/11/23 17:11:35 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/12/07 11:39:05 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*str;
-	int		i;
+	unsigned char	*asrc;
+	unsigned char	*adst;
 
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	return (0);
+	asrc = (unsigned char*)src;
+	adst = (unsigned char*)dst;
+	while (n--)
+	{
+		*adst = *asrc;
+		if (*asrc == (unsigned char)c)
+			return (adst + 1);
+		adst++;
+		asrc++;
+	}
+	return ((void*)0);
 }

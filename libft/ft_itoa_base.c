@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/16 11:03:19 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:45:23 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/12/07 11:48:30 by vcastro-          #+#    #+#             */
+/*   Updated: 2015/12/07 14:12:18 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "libft.h"
 
-int main(void)
+char	*ft_itoa_base(int val, int base)
 {
-	char	*str;
 	int		i;
+	char	*str;
 
 	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
+	while (ft_power(base, i) - 1 < val)
+		i++;
+	if (base == 10)
+	{
+		str = ft_itoa(val);
+		return (str);
+	}
+	str = malloc(sizeof(char) * i);
 	str[i] = '\0';
-	ft_putendl(str);
-
-	i = 0;
-	str = (char*)malloc(sizeof(str) * 10);
-	while (i < 9)
-		str[i++] = 'a';
-	str[i] = '\0';
-	ft_putendl(str);
-
-	return (0);
+	while (i--)
+	{
+		str[i] = (val % base) * (val % base > 9 ? 'A' - 10 : '0');
+		val = val / base;
+	}
+	return (str);
 }

@@ -6,11 +6,11 @@
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 11:02:57 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:44:44 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/17 11:08:16 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../incs/malloc.h"
 
 static t_env		g_env;
 
@@ -28,7 +28,9 @@ size_t	getblocksize(size_t allocsize)
 	npages = size / getpagesize();
 	if (size % getpagesize() > 0)
 		npages++;
-	return (npages * getpagesize());
+	ft_putnbr(npages *getpagesize() *100);
+	ft_putchar('\n');
+	return (npages * getpagesize() * 100);
 }
 
 void	*allocblock(size_t size)

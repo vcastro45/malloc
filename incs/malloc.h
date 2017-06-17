@@ -6,7 +6,7 @@
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 22:49:20 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/16 15:38:09 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/17 11:17:07 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdbool.h>
 # include <sys/mman.h>
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 # define TINY 512
 # define SMALL 4096

@@ -6,7 +6,7 @@
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 22:49:20 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/17 11:17:07 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/21 13:52:05 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # define SMALL 4096
 # define BSIZE sizeof(t_block)
 # define ALLOCSIZE(s) s + BSIZE
+# define SIZE(s) s - BSIZE
+
+# define WHERE ft_putnbr(__LINE__); ft_putstr(" "); ft_putendl(__FILE__);
 
 typedef struct		s_block
 {

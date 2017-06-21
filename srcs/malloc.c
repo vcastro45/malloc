@@ -6,88 +6,118 @@
 /*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 11:02:57 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/17 11:08:16 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/21 14:42:58 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/malloc.h"
+#include <stdio.h>
 
 static t_env		g_env;
 
-size_t	getblocksize(size_t allocsize)
-{
-	size_t	size;
-	size_t	npages;
+/*
+** `allocsize` must be ALLOCSIZE(size) * 100 for TINY and SMALL, and
+** ALLOCSIZE(size) for LARGE
+*/
 
-	if (allocsize <= TINY)
-		size = ALLOCSIZE(TINY);
-	else if (allocsize <= SMALL)
-		size = ALLOCSIZE(SMALL);
-	else
-		size = ALLOCSIZE(allocsize);
-	npages = size / getpagesize();
-	if (size % getpagesize() > 0)
-		npages++;
-	ft_putnbr(npages *getpagesize() *100);
-	ft_putchar('\n');
-	return (npages * getpagesize() * 100);
+size_t	getmultiplegps(size_t allocsize)
+{
+	int gps;
+	int npages;
+
+	gps = getpagesize();
+	npages = allocsize / gps;
+	return ((allocsize % gps > 0 ? npages + 1 : npages) * gps);
 }
 
-void	*allocblock(size_t size)
+void	push_newblock(size_t allocsize, t_block **env)
 {
-	t_block		*newblock;
-	size_t		newsize;
+	size_t	gpssize;
+	t_block	*head;
 
-	newsize = getblocksize(size);
-	newblock = mmap(NULL, newsize, PROT_READ | PROT_WRITE,
-		MAP_ANON | MAP_PRIVATE, -1, 0);
-	newblock->isfree = true;
-	newblock->size = newsize;
-	return (newblock);
-}
-
-void	*findmemory(t_block *block, size_t size)
-{
-	while (block != NULL)
+	gpssize = getmultiplegps(allocsize);
+	if (*env == NULL)
 	{
-		if (block->isfree && block->size <= ALLOCSIZE(size))
-			return (block);
-		block->next = allocblock(size);
-		block = block->next;
+		*env = mmap(NULL, gpssize, PROT_READ | PROT_WRITE,
+				MAP_ANON | MAP_PRIVATE, -1, 0);
+		head = *env;
 	}
-	return (allocblock(size));
+	else
+	{
+		head = *env;
+		while ((*env)->next != NULL)
+			*env = (*env)->next;
+		(*env)->next = mmap(NULL, gpssize, PROT_READ | PROT_WRITE,
+				MAP_ANON | MAP_PRIVATE, -1, 0);
+		*env = (*env)->next;
+	}
+	(*env)->isfree = true;
+	(*env)->size = gpssize - BSIZE;
+	(*env)->next = NULL;
+	*env = head;
 }
 
-void	allocmemory(t_block *block, size_t size)
+bool	splitblock(size_t allocsize, t_block **env)
 {
-	size_t	tmpsize;
-	t_block	*tmpnext;
-
-	tmpsize = block->size;
-	block->isfree = false;
-	block->size = size;
-	if (block->size + BSIZE > tmpsize)
-		return ;
-	tmpnext = block->next;
-	block->next = block + size;
-	block->next->size = tmpsize - block->size;
-	block->next->next = tmpnext;
+	if ((*env)->size < allocsize)
+		return (false);
+	(*env)->next = *env + allocsize;
+	(*env)->next->isfree = true;
+	(*env)->next->size = (*env)->size - allocsize;
+	(*env)->isfree = false;
+	(*env)->size = allocsize;
+	return (true);
 }
 
-t_block		*suggestenv(size_t size)
+void	*findalloc(size_t allocsize, t_block **env)
+{
+	t_block *head;
+	void*	ret;
+
+	head = *env;
+	ret = NULL;
+	ft_putstr("find addr: ");
+	ft_print_addr(*env);
+	ft_putchar('\n');
+	while (*env != NULL)
+	{
+		ft_putendl("while");
+		if ((*env)->isfree == true && (*env)->size <= allocsize)
+		{
+			if (splitblock(allocsize, env) == true)
+			{
+				ret = *env;
+				break ;
+			}
+		}
+		*env = (*env)->next;
+	}
+	*env = head;
+	if (ret == NULL)
+	{
+		ft_putendl("NEW BLOCK");
+		push_newblock(
+				SIZE(allocsize) <= SMALL ? allocsize * 100 : allocsize, env);
+		findalloc(allocsize, env);
+	}
+	return (ret);
+}
+
+t_block	**identifyenv(size_t size)
 {
 	if (size <= TINY)
-		return (g_env.tiny);
+		return (&(g_env.tiny));
 	else if (size <= SMALL)
-		return (g_env.small);
-	else
-		return (g_env.large);
+		return (&(g_env.small));
+	return (&(g_env.large));
 }
 
 void	*malloc(size_t size)
 {
-	t_block		*env;
+	t_block	**env;
 
-	env = suggestenv(size);
-	return (findmemory(env, size));
+	env = identifyenv(size);
+	findalloc(ALLOCSIZE(size), env);
+	//findalloc(ALLOCSIZE(size), env);
+	return (NULL);
 }

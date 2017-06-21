@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:51:35 by vcastro-          #+#    #+#             */
-/*   Updated: 2016/01/13 13:31:24 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/21 14:09:53 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_power(int nb, int power);
 char				*ft_itoa_base(int val, int base);
 char				*ft_strndup(const char *str, unsigned int size);
+
+void    			ft_print_addr(void *addr);
+void				ft_print_addr_fd(void *addr, int fd);
 #endif

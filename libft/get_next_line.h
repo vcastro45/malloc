@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/21 10:03:00 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/22 12:37:05 by vcastro-         ###   ########.fr       */
+/*   Created: 2015/12/04 14:13:33 by vcastro-          #+#    #+#             */
+/*   Updated: 2017/06/22 09:43:10 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/malloc.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# define BUFF_SIZE 512
+# include "libft.h"
+# include <fcntl.h>
 
-int		main(void)
+typedef struct		s_stat
 {
-	char	*str;
+	int				filedes;
+	char			buf[BUFF_SIZE + 1];
+}					t_stat;
 
-	str = malloc(1);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(1000);
-	malloc(5000);
-	malloc(5000);
-	malloc(512);
-	str[0] = '*';
-	ft_putchar(str[0]);
-	return (0);
-}
+int					get_next_line(int const fd, char **line);
+#endif

@@ -6,7 +6,7 @@
 #    By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 15:07:44 by vcastro-          #+#    #+#              #
-#    Updated: 2017/06/21 14:11:50 by vcastro-         ###   ########.fr        #
+#    Updated: 2017/06/22 10:03:27 by vcastro-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FILESC=ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 	   ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c \
 	   ft_toupper.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c \
 	   ft_lstmap.c ft_lstnew.c ft_power.c ft_itoa_base.c ft_strndup.c \
-	   ft_print_addr_fd.c ft_print_addr.c
+	   ft_print_addr_fd.c ft_print_addr.c get_next_line.c
 
 FILESO=$(FILESC:.c=.o)
 

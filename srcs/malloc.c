@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 11:02:57 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/21 14:42:58 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/22 12:52:28 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/malloc.h"
-#include <stdio.h>
-
-static t_env		g_env;
-
-/*
-** `allocsize` must be ALLOCSIZE(size) * 100 for TINY and SMALL, and
-** ALLOCSIZE(size) for LARGE
-*/
-
-size_t	getmultiplegps(size_t allocsize)
-{
-	int gps;
-	int npages;
-
-	gps = getpagesize();
-	npages = allocsize / gps;
-	return ((allocsize % gps > 0 ? npages + 1 : npages) * gps);
-}
 
 void	push_newblock(size_t allocsize, t_block **env)
 {
@@ -61,55 +43,40 @@ bool	splitblock(size_t allocsize, t_block **env)
 {
 	if ((*env)->size < allocsize)
 		return (false);
-	(*env)->next = *env + allocsize;
+	(*env)->next = (void*)((unsigned long long int)*env +
+		(unsigned long long int)allocsize);
 	(*env)->next->isfree = true;
-	(*env)->next->size = (*env)->size - allocsize;
+	(*env)->next->size = (*env)->size - allocsize + BSIZE;
 	(*env)->isfree = false;
 	(*env)->size = allocsize;
+	debug_print_current_alloc(*env);
 	return (true);
 }
 
-void	*findalloc(size_t allocsize, t_block **env)
+void	*findalloc(size_t allocs, t_block **env)
 {
-	t_block *head;
-	void*	ret;
+	t_block	*tmp;
 
-	head = *env;
-	ret = NULL;
-	ft_putstr("find addr: ");
-	ft_print_addr(*env);
-	ft_putchar('\n');
-	while (*env != NULL)
+	if (*env == NULL)
 	{
-		ft_putendl("while");
-		if ((*env)->isfree == true && (*env)->size <= allocsize)
+		ft_putendl("*env is NULL");
+		push_newblock(SIZE(allocs) <= SMALL ? allocs * 100 : allocs, env);
+	}
+	tmp = *env;
+	while (tmp != NULL)
+	{
+		if (tmp->isfree && tmp->size >= allocs)
 		{
-			if (splitblock(allocsize, env) == true)
-			{
-				ret = *env;
-				break ;
-			}
+			ft_putendl("free space found");
+			if (splitblock(allocs, &tmp))
+				return (tmp);
 		}
-		*env = (*env)->next;
+		tmp = tmp->next;
 	}
-	*env = head;
-	if (ret == NULL)
-	{
-		ft_putendl("NEW BLOCK");
-		push_newblock(
-				SIZE(allocsize) <= SMALL ? allocsize * 100 : allocsize, env);
-		findalloc(allocsize, env);
-	}
-	return (ret);
-}
-
-t_block	**identifyenv(size_t size)
-{
-	if (size <= TINY)
-		return (&(g_env.tiny));
-	else if (size <= SMALL)
-		return (&(g_env.small));
-	return (&(g_env.large));
+	ft_putendl("\nno space found, pushing new block");
+	push_newblock(SIZE(allocs) <= SMALL ? allocs * 100 : allocs, env);
+	findalloc(allocs, env);
+	return (NULL);
 }
 
 void	*malloc(size_t size)
@@ -117,7 +84,5 @@ void	*malloc(size_t size)
 	t_block	**env;
 
 	env = identifyenv(size);
-	findalloc(ALLOCSIZE(size), env);
-	//findalloc(ALLOCSIZE(size), env);
-	return (NULL);
+	return (findalloc(ALLOCSIZE(size), env));
 }

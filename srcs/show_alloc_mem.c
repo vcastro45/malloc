@@ -6,41 +6,47 @@
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/22 15:08:55 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/22 15:41:07 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/22 19:28:03 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/malloc.h"
 
-size_t	print_env(t_block *ptr)
+size_t	print_block_range(t_block *ptr)
 {
 	size_t	size;
-	t_block	*tmp;
-	t_block *start;
+	t_block	*start;
 
 	size = 0;
 	start = ptr;
-	tmp = ptr;
-	while (ptr != NULL)
-	{
-		if (ptr->prev != NULL && ptr->isfirst) // BUG PRON
-			return (print_env(ptr));
-		tmp = ptr;
-		ptr = ptr->next;
-	}
-	ft_print_addr(start);
+	ft_print_addr(ptr);
 	ft_putstr(" - ");
-	if (tmp != NULL)
+	if (ptr == NULL)
 	{
-		ft_print_addr((void*)((unsigned long long int)tmp +
-		(unsigned long long int)(tmp->size)));
-		size = (unsigned long long int)tmp - (unsigned long long int)start;
+		ft_print_addr(ptr);
+		return (size);
 	}
-	else
-		ft_print_addr(tmp);
+	while (ptr->next != NULL && ptr->next->isfirst == false)
+		ptr = ptr->next;
+	ft_print_addr(ptr);
+	size = (unsigned long long int)ptr - (unsigned long long int)start;
 	ft_putstr(" : ");
 	ft_putnbr(size);
-	ft_putstr(" octets");
+	ft_putendl(" octets");
+	return (size);
+}
+
+size_t	print_env(t_block *ptr)
+{
+	size_t	size;
+
+	size = 0;
+	while (ptr != NULL)
+	{
+		if (ptr->isfirst)
+			size += print_block_range(ptr);
+		ptr = ptr->next;
+	}
 	return (size);
 }
 
@@ -53,15 +59,15 @@ void	show_alloc_mem(void)
 	ft_print_addr(g_env.tiny);
 	ft_putchar('\n');
 	total += print_env(g_env.tiny);
-	ft_putstr("\nSMALL : ");
+	ft_putstr("SMALL : ");
 	ft_print_addr(g_env.small);
 	ft_putchar('\n');
 	total += print_env(g_env.small);
-	ft_putstr("\nLARGE : ");
+	ft_putstr("LARGE : ");
 	ft_print_addr(g_env.large);
 	ft_putchar('\n');
 	total += print_env(g_env.large);
-	ft_putstr("\nTotal : ");
+	ft_putstr("Total : ");
 	ft_putnbr(total);
 	ft_putendl(" octets");
 }

@@ -6,7 +6,7 @@
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/21 10:03:00 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/22 15:39:24 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/22 19:35:30 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,12 @@
 
 int		main(void)
 {
-	// void	*ptr = malloc(50);
-	malloc(1);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
-	malloc(512);
+	 void	*ptr = malloc(50);
 	ft_putendl("\nfree\n----------------------");
+	ft_putendl("void *ptr = malloc(50);\n");
 	show_alloc_mem();
-	// free(ptr);
+	ft_putendl("\nfree(ptr);\n");
+	free(ptr);
+	show_alloc_mem();
 	return (0);
 }

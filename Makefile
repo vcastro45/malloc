@@ -6,7 +6,7 @@
 #    By: vcastro- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/17 09:39:18 by vcastro-          #+#    #+#              #
-#    Updated: 2017/06/17 09:49:30 by vcastro-         ###   ########.fr        #
+#*   Updated: 2017/06/22 20:10:12 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ endif
 
 NAME			= libft_malloc_$(HOSTTYPE).so
 
-SRC_NAME		= malloc.c
+SRC_NAME		= malloc.c free.c show_alloc_mem.c utility.c debug.c
 
 
 LIBRARY			= libft/libft.a

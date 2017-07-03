@@ -6,7 +6,7 @@
 /*   By: vcastro- <vcastro-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/22 13:00:02 by vcastro-          #+#    #+#             */
-/*   Updated: 2017/06/22 15:19:48 by vcastro-         ###   ########.fr       */
+/*   Updated: 2017/06/22 20:31:31 by vcastro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ bool	joinblock(t_block *ptr)
 
 void	free(void *ptr)
 {
-	// if (ptr == NULL)
-	// 	return ;
+	if (ptr == NULL)
+		return ;
 	// ft_putstr("addr: ");
 	// ft_print_addr(ptr);
 	// ft_putchar('\n');
